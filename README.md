@@ -4,3 +4,4 @@ Authors: Pauline Bruyant1,2, Lauren Gillespie1, Jeanne Doré1, Pierre Emmanuel C
 
 Each folder contains the scripts needed to reprodice the figures. Librarues need to be installed and the workid directory has to be adjusted.
 
+All sequencing data are deposited at the NCBI database under accession PRJNA1141433 (Illumina Miseq)
