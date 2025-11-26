@@ -1,0 +1,385 @@
+./mothur
+set.dir(input=Analysis_NGS01773)
+make.file(inputdir=Analysis_NGS01773, type=fastq, prefix=tot)
+### donne tot.files
+
+make.contigs(file=tot.files)
+
+#Total of all groups is 31796573
+#It took 9764 secs to process 31796573 sequences.
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.fasta
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.scrap.contigs.fasta
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.report
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.groups
+
+
+summary.seqs(fasta=tot.trim.contigs.fasta)
+
+#                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       35      35      0       2       1
+#2.5%-tile:      1       276     276     0       4       794915
+#25%-tile:       1       297     297     0       4       7949144
+#Median:         1       302     302     0       5       15898287
+#75%-tile:       1       325     325     1       6       23847430
+#97.5%-tile:     1       372     372     18      8       31001659
+#Maximum:        1       600     600     130     299     31796573
+#Mean:   1       312     312     1       5
+### of Seqs:      31796573
+
+
+screen.seqs(fasta=tot.trim.contigs.fasta, contigsreport=tot.contigs.report, group=tot.contigs.groups, minoverlap=5, processors=12)
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.summary
+
+#It took 231 secs to screen 31796573 sequences, removed 26532.
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.good.contigs.report
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.fasta
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.bad.accnos
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.good.groups
+
+summary.seqs(fasta=tot.trim.contigs.good.fasta)
+ 
+#                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       35      35      0       2       1
+#2.5%-tile:      1       276     276     0       4       794252
+#25%-tile:       1       297     297     0       4       7942511
+#Median:         1       302     302     0       5       15885021
+#75%-tile:       1       324     324     1       6       23827531
+#97.5%-tile:     1       371     371     18      8       30975790
+#Maximum:        1       596     596     130     299     31770041
+#Mean:   1       312     312     1       5
+## of Seqs:      31770041
+
+#It took 232 secs to summarize 31770041 sequences.
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.summary
+
+cutadapt -g GTGARTCATCGAATCTTTG -o tot.trim.contigs.good.cuta.fasta 
+
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.fasta
+ 
+#Analysis_NGS01773/tot.trim.contigs.good.fasta
+#This is cutadapt 3.4 with Python 3.9.2
+#Command line parameters: -g GTGARTCATCGAATCTTTG -o tot.trim.contigs.good.cuta.fasta #/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.fasta
+#Processing reads on 1 core in single-end mode ...
+#[        8=--] 00:10:45    31,770,041 reads  @     20.3 µs/read;   2.95 M reads/minute
+#Finished in 645.46 s (20 µs/read; 2.95 M reads/minute).
+
+#=== Summary ===
+
+#Total reads processed:              31,770,041
+#Reads with adapters:                31,648,055 (99.6%)
+#Reads written (passing filters):    31,770,041 (100.0%)
+
+#Total basepairs processed: 9,918,992,301 bp
+#Total written (filtered):  9,165,979,898 bp (92.4%)
+
+#=== Adapter 1 ===
+
+#Sequence: GTGARTCATCGAATCTTTG; Type: regular 5'; Length: 19; Trimmed: 31648055 times
+
+#No. of allowed errors:
+#1-9 bp: 0; 10-19 bp: 1
+
+cutadapt -a GCATATCAATAAGCGGAGGA -o tot.trim.contigs.good.cuta.cuta.fasta tot.trim.contigs.good.cuta.fasta
+
+#This is cutadapt 3.4 with Python 3.9.2
+#Command line parameters: -a GCATATCAATAAGCGGAGGA -o tot.trim.contigs.good.cuta.cuta.fasta tot.trim.contigs.good.cuta.fasta
+#Processing reads on 1 core in single-end mode ...
+#[ 8=---------] 00:17:13    31,770,041 reads  @     32.5 µs/read;   1.84 M reads/minute
+#Finished in 1034.11 s (33 µs/read; 1.84 M reads/minute).
+
+#=== Summary ===
+
+#Total reads processed:              31,770,041
+#Reads with adapters:                30,995,959 (97.6%)
+#Reads written (passing filters):    31,770,041 (100.0%)
+
+#Total basepairs processed: 9,165,979,898 bp
+#Total written (filtered):  8,473,066,398 bp (92.4%)
+
+#=== Adapter 1 ===
+
+#Sequence: GCATATCAATAAGCGGAGGA; Type: regular 3'; Length: 20; Trimmed: 30995959 times
+
+#No. of allowed errors:
+#1-9 bp: 0; 10-19 bp: 1; 20 bp: 2
+
+
+./mothur
+set.dir(input=/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773)
+summary.seqs(fasta=tot.trim.contigs.good.cuta.cuta.fasta)
+
+
+#                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       0       0       0       1       1
+#2.5%-tile:      1       236     236     0       4       794252
+#25%-tile:       1       241     241     0       4       7942511
+#Median:         1       255     255     0       5       15885021
+#75%-tile:       1       286     286     0       6       23827531
+#97.5%-tile:     1       334     334     18      8       30975790
+#Maximum:        1       596     596     130     299     31770041
+#Mean:   1       266     266     1       5
+## of Seqs:      31770041
+
+#It took 203 secs to summarize 31770041 sequences.
+
+#Output File Names:
+#/home/pers/pauline.bruyant/Data_test/mothur/tot.trim.contigs.good.cuta.cuta.summary
+
+screen.seqs(fasta=tot.trim.contigs.good.cuta.cuta.fasta, summary=tot.trim.contigs.good.cuta.cuta.summary, group=tot.contigs.good.groups, maxambig=0, maxhomop=10, minlength=100, maxlength=600, processors=36)
+
+#It took 1192 secs to screen 31770041 sequences, removed 7912984.
+
+#/******************************************/
+#Running command: remove.seqs(accnos=/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.bad.accnos.temp, #group=/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.good.groups)
+#Removed 7912984 sequences from your group file.
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.good.pick.groups
+
+#/******************************************/
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.summary
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.fasta
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.bad.accnos
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.contigs.good.good.groups
+
+
+#It took 1510 secs to screen 31770041 sequences.
+
+summary.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.fasta)
+
+unique.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.fasta, group=tot.contigs.good.good.groups)
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.names
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.fasta
+
+summary.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.fasta)
+
+#                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       100     100     0       2       1
+#2.5%-tile:      1       236     236     0       4       42817
+#25%-tile:       1       242     242     0       5       428161
+#Median:         1       261     261     0       5       856321
+#75%-tile:       1       301     301     0       6       1284481
+#97.5%-tile:     1       350     350     0       8       1669825
+#Maximum:        1       596     596     0       10      1712641
+#Mean:   1       274     274     0       5
+## of Seqs:      1712641
+
+#It took 11 secs to summarize 1712641 sequences.
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.summary
+
+count.seqs(name=tot.trim.contigs.good.cuta.cuta.good.names, group=tot.contigs.good.good.groups)
+#It took 356 secs to create a table for 23857057 sequences.
+
+#Total number of sequences: 23857057
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.count_table
+
+chimera.uchime(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.fasta, count=tot.trim.contigs.good.cuta.cuta.good.count_table, dereplicate=t, processors=36)
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.denovo.uchime.pick.count_table
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.denovo.uchime.chimeras
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.denovo.uchime.accnos
+
+
+remove.seqs(accnos=tot.trim.contigs.good.cuta.cuta.good.unique.denovo.uchime.accnos, fasta=tot.trim.contigs.good.cuta.cuta.good.unique.fasta, count=tot.trim.contigs.good.cuta.cuta.good.count_table)
+
+#Removed 8957 sequences from your fasta file.
+#Removed 11843 sequences from your count file.
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.fasta
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.pick.count_table
+
+
+
+summary.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.fasta)
+
+#
+#                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       100     100     0       2       1
+#2.5%-tile:      1       236     236     0       4       42593
+#25%-tile:       1       242     242     0       5       425922
+#Median:         1       261     261     0       5       851843
+#75%-tile:       1       301     301     0       6       1277764
+#97.5%-tile:     1       350     350     0       8       1661092
+#Maximum:        1       596     596     0       10      1703684
+#Mean:   1       274     274     0       5
+## of Seqs:      1703684
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.summary
+
+
+ITSx -i tot.trim.contigs.good.cuta.cuta.good.unique.pick.fasta --preserve T --save_regions all -t . --allow_single_domain 1e-5,0 -N 1 --cpu 32 --partial 1
+conda deactivate
+
+#files: 
+
+#ITSx_out.5_8S.fasta
+#ITSx_out.5_8S.full_and_partial.fasta
+#ITSx_out.chimeric.fasta
+#ITSx_out.full_and_partial.fasta
+#ITSx_out.full.fasta
+#ITSx_out.graph
+#ITSx_out.ITS1.fasta
+#ITSx_out.ITS1.full_and_partial.fasta
+#ITSx_out.ITS2.fasta
+#ITSx_out.ITS2.full_and_partial.fasta
+#ITSx_out.LSU.fasta
+#ITSx_out.LSU.full_and_partial.fasta
+#ITSx_out_no_detections.fasta
+#ITSx_out_no_detections.txt
+#ITSx_out.positions.txt
+#ITSx_out.problematic.txt
+#ITSx_out.SSU.fasta
+#ITSx_out.SSU.full_and_partial.fasta
+#ITSx_out.summary.txt
+
+mv ITSx_out.ITS2.full_and_partial.fasta tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.fasta
+./mothur
+set.dir(input=NGS/Analysis_NGS01773)
+
+summary.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.fasta)
+
+
+#
+#                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       5       5       0       2       1
+#2.5%-tile:      1       141     141     0       3       42164
+#25%-tile:       1       147     147     0       4       421633
+#Median:         1       164     164     0       5       843266
+#75%-tile:       1       206     206     0       6       1264899
+#97.5%-tile:     1       256     256     0       8       1644368
+#Maximum:        1       587     587     0       10      1686531
+#Mean:   1       178     178     0       5
+## of Seqs:      1686531
+
+#It took 9 secs to summarize 1686531 sequences.
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.summary
+
+
+summary.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.fasta)
+
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+#Minimum:        1       100     100     0       2       1
+#2.5%-tile:      1       236     236     0       4       42593
+#25%-tile:       1       242     242     0       5       425922
+#Median:         1       261     261     0       5       851843
+#75%-tile:       1       301     301     0       6       1277764
+#97.5%-tile:     1       350     350     0       8       1661092
+#Maximum:        1       596     596     0       10      1703684
+#Mean:   1       274     274     0       5
+## of Seqs:      1703684
+
+#It took 10 secs to summarize 1703684 sequences.
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.summary
+
+list.seqs(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.fasta)
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.accnos
+
+
+get.seqs(accnos=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.accnos, count=tot.trim.contigs.good.cuta.cuta.good.denovo.uchime.pick.count_table)
+
+#Selected 23814166 sequences from your count file.
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.denovo.uchime.pick.pick.count_table
+
+Classify.seqs(tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.fasta,template=unitephix100521.fasta, taxonomy=taxout2.txt, processors=26)
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.taxout3.wang.taxonomy
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.taxout3.wang.tax.summary
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.taxout3.wang.flip.accnos
+
+
+cluster(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.fasta, count=tot.trim.contigs.good.cuta.cuta.good.denovo.uchime.pick.pick.count_table, method=dgc, cutoff=0.01-0.03)
+
+#Using 48 processors.
+
+#0.01
+
+#0.03
+#It took 1812 seconds to cluster
+
+#Output File Names:
+#/home/pers/pauline.bruyant//Data_test/mothur/NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.list
+
+
+get.seqs(accnos=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.accnos, count=tot.trim.contigs.good.cuta.cuta.good.pick.count_table)
+
+#Selected 23823526 sequences from your count file.
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.pick.pick.count_table
+
+split.abund(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.fasta, count=tot.trim.contigs.good.cuta.cuta.good.pick.pick.count_table, list=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.list, cutoff=50)
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01_OTUS.rare.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01_OTUS.abund.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.rare.list
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.list
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.rare.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.01.rare.count_table
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.0.01.rare.fasta
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.01.abund.count_table
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.0.01.abund.fasta
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.03_OTUS.rare.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.03_OTUS.abund.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.03.rare.list
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.03.abund.list
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.03.rare.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.03.abund.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.03.rare.count_table
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.0.03.rare.fasta
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.03.abund.count_table
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.0.03.abund.fasta
+
+
+classify.otu(taxonomy=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.taxout3.wang.taxonomy, list=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.list, count=tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.01.abund.count_table, relabund=F, basis=sequence)
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.cons.taxonomy
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.cons.tax.summary
+
+make.shared(list=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.list, count=tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.01.abund.count_table)
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.shared
+
+remove.lineage(constaxonomy=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.cons.taxonomy, shared=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.shared, taxon=unknown-k__Viridiplantae)
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.cons.pick.cons.taxonomy
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.cons.accnos
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.pick.shared
+
+
+get.oturep(fasta=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.0.01.abund.fasta, list=tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.list, count=tot.trim.contigs.good.cuta.cuta.good.pick.pick.0.01.abund.count_table, method=abundance)
+
+#Output File Names:
+#NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.rep.count_table
+"NGS/Analysis_NGS01773/tot.trim.contigs.good.cuta.cuta.good.unique.pick.itsx.dgc.0.01.abund.0.01.rep.fasta
+
+
