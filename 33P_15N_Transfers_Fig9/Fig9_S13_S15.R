@@ -1,4 +1,4 @@
-#code for Figure 9B and S13
+#code for Figure 9B, S13 and S15
 #fungus to plant 33P and 15N transfer upon inoculation
 
 ###mind that in this code, poireau means "leek (A. ampeloprasum), Champignon means "fungi"
