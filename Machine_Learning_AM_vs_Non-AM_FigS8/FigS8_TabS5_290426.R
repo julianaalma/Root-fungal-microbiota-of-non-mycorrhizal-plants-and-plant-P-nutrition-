@@ -279,7 +279,7 @@ taxspeciesscores2$Status<-total$Status
 taxspeciesscores2<-taxspeciesscores2[order(taxspeciesscores2$Status),]
 taxspeciesscores3<-taxspeciesscores2[,1:ncol(taxspeciesscores2)] #822 OTUs = 822 columns
 
-#Run Wilcoxon test comparing OTU RA between Myc vs Non-Myc plants, get only OTUs showing significant differences
+#Run Wilcoxon test comparing OTU RA between Myc vs Non-Myc plants, get only OTUs showing significant differences among all OTUs
 estimates_P.value<-data.frame()
 for (i in 1:822){
   mod <- wilcox.test(taxspeciesscores2[1:72,i],taxspeciesscores2[73:144,i])
@@ -295,7 +295,7 @@ estimatessigni$Row.names<-rownames(estimatessigni)
 taxspeciesscores2<-total %>% dplyr::select(which(colnames(total) %in% RF_alpine_taxo$Row.names))
 taxspeciesscores2$Status<-total$Status
 taxspeciesscores2<-taxspeciesscores2[order(taxspeciesscores2$Status),]
-taxspeciesscores3<-taxspeciesscores2[,1:ncol(taxspeciesscores2)] #822 OTUs = 822 columns
+taxspeciesscores3<-taxspeciesscores2[,1:ncol(taxspeciesscores2)] #100 OTUs = 100 columns
 
 #Run Wilcoxon test comparing OTU RA between Myc vs Non-Myc plants, get only OTUs showing significant differences
 estimates_P.value<-data.frame()
@@ -309,7 +309,7 @@ estimates_P.value$Row.names<-rownames(estimates_P.value)
 estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
 estimatessigni$Row.names<-rownames(estimatessigni)
 
-####P-value adjustment: 91/100 significant
+####P-value adjustment: 48/100 remain significant
 estimates_P.value$P_adj<-p.adjust(estimates_P.value$V1, method = "BH", n = length(estimates_P.value$V1))
 estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
 estimatessigni$Row.names<-rownames(estimatessigni)
