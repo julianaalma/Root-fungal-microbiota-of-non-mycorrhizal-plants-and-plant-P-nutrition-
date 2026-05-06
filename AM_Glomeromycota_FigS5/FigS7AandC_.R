@@ -1,4 +1,4 @@
-###Fig. S7A and C: Glomeromycota Relative abundance and Mycorrhization levels
+###Fig. S5B and C: Glomeromycota Relative abundance and Mycorrhization levels
 
 ###libraries needed####
 library(phyloseq)
