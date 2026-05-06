@@ -536,7 +536,7 @@ estimates_P.value$Row.names<-rownames(estimates_P.value)
 estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
 estimatessigni$Row.names<-rownames(estimatessigni)
 
-####P-value adjustment: 3/100 significant
+####P-value adjustment: 3/100 remain significant
 estimates_P.value$P_adj<-p.adjust(estimates_P.value$V1, method = "BH", n = length(estimates_P.value$V1))
 estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
 estimatessigni$Row.names<-rownames(estimatessigni)
