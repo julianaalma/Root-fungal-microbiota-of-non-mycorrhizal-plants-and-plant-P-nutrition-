@@ -35,8 +35,8 @@ library(randomForest)
 library(stats)
 
 #set wd
-setwd("~/Documents/Labo/MS/4_Pauline_xp/V4_resub_2025/Git_new/Machine_Learning_Fig5_Fig6")
-
+#setwd("~/Documents/Labo/MS/4_Pauline_xp/V4_resub_2025/Git_new/Machine_Learning_Fig5_Fig6")
+setwd("C:/Users/pbruyant/Documents/Article thèse/Nvelle version/New_code_figS8_AM_vs_Non_AM/")
 ###import data###
 otu_mat<- read_excel("tableitsx_phyloseq_corrected.xlsx", sheet = "Table OTU plants")
 tax_mat<- read_excel("tableitsx_phyloseq_corrected.xlsx", sheet = "Taxonomy")
@@ -258,6 +258,12 @@ taxspeciesscores1<-merge(taxo,arrangedscorsotus,by="row.names")
 taxspeciesscores1<-taxspeciesscores1 %>% arrange(desc(abs(CAP1)))
 #822 OTUs
 
+###Threshold of 200 most important OTUs to keep based on CAP1
+plot(abs(arrangedscorsotus$CAP1))
+grid(nx=10,ny=10)
+abline(v=400,col="red")
+#taxspeciesscores1_200<-taxspeciesscores1[1:200,]
+
 #add taxonomy info
 rownames(taxspeciesscores1)<-taxspeciesscores1$Row.names
 taxspeciesscores1<-t(taxspeciesscores1)
@@ -285,9 +291,34 @@ estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
 estimatessigni$Row.names<-rownames(estimatessigni)
 #105 OTUS
 
+#####Wilcoxon on RF output on the 100 OTUs#####
+taxspeciesscores2<-total %>% dplyr::select(which(colnames(total) %in% RF_alpine_taxo$Row.names))
+taxspeciesscores2$Status<-total$Status
+taxspeciesscores2<-taxspeciesscores2[order(taxspeciesscores2$Status),]
+taxspeciesscores3<-taxspeciesscores2[,1:ncol(taxspeciesscores2)] #822 OTUs = 822 columns
+
+#Run Wilcoxon test comparing OTU RA between Myc vs Non-Myc plants, get only OTUs showing significant differences
+estimates_P.value<-data.frame()
+for (i in 1:100){
+  mod <- wilcox.test(taxspeciesscores2[1:72,i],taxspeciesscores2[73:144,i])
+  estimates_P.value[i,1] <- mod$p.value
+  rownames(estimates_P.value)[i]<-colnames(taxspeciesscores3)[i]
+}
+###No p-value adjustment: 57/100 significant
+estimates_P.value$Row.names<-rownames(estimates_P.value)
+estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
+estimatessigni$Row.names<-rownames(estimatessigni)
+
+####P-value adjustment: 91/100 significant
+estimates_P.value$P_adj<-p.adjust(estimates_P.value$V1, method = "BH", n = length(estimates_P.value$V1))
+estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
+estimatessigni$Row.names<-rownames(estimatessigni)
+write.csv2(estimatessigni,"Alp_RF_p_adjust_all_100.csv")
+
+
 ######Merge results####
 #OTUs kept if in top 100 in RF AND Significantly differential abundant based of Wilcoxon's test => 57 OTUs
-tabtoprint<-merge(estimatessigni,t(taxspeciesscores1),by="Row.names")
+tabtoprint<-merge(estimatessigni,t(taxspeciesscores1_200),by="Row.names")
 tabtoprint<-tabtoprint%>% rename("p-value"=V1)
 tabtoprintrf_alp<-merge(RF_alpine_taxo,tabtoprint,by="Row.names")
 write.csv2(tabtoprintrf_alp,"Capwilx_RF_myc_vs_nonmyc_alpine_57otus.csv")
@@ -485,6 +516,32 @@ estimates_P.value$Row.names<-rownames(estimates_P.value)
 estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
 estimatessigni$Row.names<-rownames(estimatessigni)
 #82 OTUs
+
+
+#####Wilcoxon on RF output on the 100 OTUs#####
+taxspeciesscores2<-total %>% dplyr::select(which(colnames(total) %in% RF_plaine_taxo$Row.names))
+taxspeciesscores2$Status<-total$Status
+taxspeciesscores2<-taxspeciesscores2[order(taxspeciesscores2$Status),]
+taxspeciesscores3<-taxspeciesscores2[,1:ncol(taxspeciesscores2)] #822 OTUs = 822 columns
+
+#Run Wilcoxon test comparing OTU RA between Myc vs Non-Myc plants, get only OTUs showing significant differences
+estimates_P.value<-data.frame()
+for (i in 1:100){
+  mod <- wilcox.test(taxspeciesscores2[1:54,i],taxspeciesscores2[55:109,i])
+  estimates_P.value[i,1] <- mod$p.value
+  rownames(estimates_P.value)[i]<-colnames(taxspeciesscores3)[i]
+}
+###No p-value adjustemnt : 47/100 significant
+estimates_P.value$Row.names<-rownames(estimates_P.value)
+estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
+estimatessigni$Row.names<-rownames(estimatessigni)
+
+####P-value adjustment: 3/100 significant
+estimates_P.value$P_adj<-p.adjust(estimates_P.value$V1, method = "BH", n = length(estimates_P.value$V1))
+estimatessigni<-estimates_P.value[estimates_P.value$V1 <= 0.05,]
+estimatessigni$Row.names<-rownames(estimatessigni)
+write.csv2(estimatessigni,"Plaine_RF_p_adj_all_100.csv")
+
 
 ######Merge results####
 #OTUs kept if in top 100 in RF AND Significantly differential abundant based of Wilcoxon's test => 47 OTUs
